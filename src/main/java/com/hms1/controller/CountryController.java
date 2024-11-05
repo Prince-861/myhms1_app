@@ -1,5 +1,7 @@
 package com.hms1.controller;
 
+import com.hms1.entity.AppUser;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +16,10 @@ public class CountryController {
     //http://localhost:8080/api/v1/country
     //The above particular url, when we want to access it should be accessed only when the token is sent with this url and the token is valid otherwise this url is not accessible.
     @PostMapping("/addCountry")
-    public String addCountry(){
-        return "added";
-    }
+    public AppUser addCountry(@AuthenticationPrincipal AppUser user){//@Authentication AppUser user, after writing this line automatically the token that belongs to which user will come to this object.
+        return user;
+    }//This method when we supply the token, it is going to return me back which user has logged-in
+
 //    In the postman, with this url(http://localhost:8080/api/v1/country) we are sending the JWT token ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic3RhbGxpbiIsImV4cCI6MTczMDUyODg1MCwiaXNzIjoicHJpbmNlIn0.-CgjxdIqNo7fY2MnYKVtyzhDn1bKfxwgwPmFsyeSTdg")
 //    From the postman, when we click on send, this token will go to the backend. Now the backend code has to extract the token from this url and verify the token
 //    and only when the token is valid, it should give the response back.
